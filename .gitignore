@@ -47,6 +47,8 @@ build/**
 
 # IntelliJ
 /out/
+.idea/compiler.xml
+.idea/misc.xml
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
