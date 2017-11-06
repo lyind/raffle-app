@@ -391,7 +391,6 @@
     require([
         "core/broker.js",
         "core/ui.js",
-        "core/ws.js",
         "core/http.js",
         "core/util.js",
         "polyfill/polyfill.js", // load all registered polyfills
@@ -400,8 +399,6 @@
     function()
     {
         console.log("[app] mounted at: " + app.baseUrl.pathname);
-
-        app.ws.open(app.baseUrl.href.replace("http", "ws"));
 
         window.addEventListener("load", considerRunningScheduled);
         setupInitialRoute();

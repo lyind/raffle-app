@@ -49,6 +49,8 @@ public class Quiz
 
         private final String lastName;
 
+        private final String company;
+
         private final String street;
 
         private final String zip;
@@ -62,6 +64,7 @@ public class Quiz
         @JsonCreator
         public Participant(@JsonProperty("name") String name,
                            @JsonProperty("lastName") String lastName,
+                           @JsonProperty("company") String company,
                            @JsonProperty("street") String street,
                            @JsonProperty("zip") String zip,
                            @JsonProperty("city") String city,
@@ -69,6 +72,7 @@ public class Quiz
         {
             this.name = name;
             this.lastName = lastName;
+            this.company = company;
             this.street = street;
             this.zip = zip;
             this.city = city;
