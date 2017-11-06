@@ -11,19 +11,16 @@ import io.undertow.server.handlers.resource.ResourceHandler;
 @Singleton
 public class RaffleRootHandlerWrapper implements HandlerWrapper
 {
-    private final FallbackFileSystemResourceHandler fallbackFileSystemResourceHandler;
-
     private final RaffleClassPathResourceManager classPathResourceManager;
 
     private final RaffleFileSystemResourceManager fileSystemResourceManager;
 
 
     @Inject
-    public RaffleRootHandlerWrapper(RaffleFileSystemResourceManager fileSystemResourceManager, RaffleClassPathResourceManager classPathResourceManager, FallbackFileSystemResourceHandler fallbackFileSystemResourceHandler)
+    public RaffleRootHandlerWrapper(RaffleFileSystemResourceManager fileSystemResourceManager, RaffleClassPathResourceManager classPathResourceManager)
     {
         this.fileSystemResourceManager = fileSystemResourceManager;
         this.classPathResourceManager = classPathResourceManager;
-        this.fallbackFileSystemResourceHandler = fallbackFileSystemResourceHandler;
     }
 
 
@@ -34,6 +31,6 @@ public class RaffleRootHandlerWrapper implements HandlerWrapper
         // 2. try to serve from class-path
         // 3. try to serve index.html from working directory
         // 4. 403
-        return new ResourceHandler(fileSystemResourceManager, new ResourceHandler(classPathResourceManager, fallbackFileSystemResourceHandler));
+        return new ResourceHandler(fileSystemResourceManager, new ResourceHandler(classPathResourceManager, handler));
     }
 }

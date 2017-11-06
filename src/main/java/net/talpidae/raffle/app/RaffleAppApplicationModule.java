@@ -19,13 +19,21 @@ package net.talpidae.raffle.app;
 
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
 
 import net.talpidae.base.Base;
+import net.talpidae.base.database.DataBaseConfig;
+import net.talpidae.base.database.DefaultDataBaseConfig;
 import net.talpidae.base.util.Application;
 import net.talpidae.base.util.auth.Authenticator;
 import net.talpidae.base.util.session.SessionService;
+import net.talpidae.raffle.app.database.RaffleAppDefaultDataBaseConfig;
+import net.talpidae.raffle.app.database.RaffleRepository;
 import net.talpidae.raffle.app.util.auth.LocalAuthenticator;
 import net.talpidae.raffle.app.util.session.LocalSessionService;
+
+import org.jdbi.v3.core.Jdbi;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,5 +54,15 @@ public class RaffleAppApplicationModule extends AbstractModule
 
         bind(Authenticator.class).to(LocalAuthenticator.class);
         bind(SessionService.class).to(LocalSessionService.class);
+
+        bind(DefaultDataBaseConfig.class).to(RaffleAppDefaultDataBaseConfig.class);
+    }
+
+
+    @Provides
+    @Singleton
+    public RaffleRepository raffleRepositoryProvider(Jdbi jdbi)
+    {
+        return jdbi.onDemand(RaffleRepository.class);
     }
 }

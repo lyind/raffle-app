@@ -43,14 +43,19 @@ app.require([
 
             var POST = function (url, responseType, headers, body, contentType)
             {
+                var mergedHeaders = headers || {};
+                if (contentType)
+                {
+                    mergedHeaders["Content-Type"] = contentType;
+                }
+
                 return Rx.Observable.ajax({
                     method: 'POST',
                     url: url,
                     body: body,
-                    contentType: contentType,
                     responseType: responseType,
                     async: true,
-                    headers: headers
+                    headers: mergedHeaders
                 })
                     .map(function (ajaxResponse)
                     {
