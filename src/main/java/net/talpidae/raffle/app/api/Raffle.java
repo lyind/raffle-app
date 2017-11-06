@@ -23,7 +23,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 
@@ -33,13 +35,14 @@ public interface Raffle
     /**
      * Accepts a quiz result document and persists it into the DB.
      *
+     * @param updateBaseline Update baseline for calculating ResultStats.
      * @return ID of the result record added to the DB.
      */
     @POST
     @Path("/quiz/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Integer postQuiz(Quiz quiz);
+    Integer postQuiz(Quiz quiz, @QueryParam("updateBaseline") Boolean updateBaseline);
 
 
     /**
@@ -48,7 +51,7 @@ public interface Raffle
     @GET
     @Path("/quiz/")
     @Produces(MediaType.APPLICATION_JSON)
-    List<Quiz> getQuiz();
+    List<FinishedQuiz> getQuiz();
 
 
     /**
@@ -59,5 +62,5 @@ public interface Raffle
     @GET
     @Path("/quiz/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    Quiz getQuizById(Integer id);
+    FinishedQuiz getQuizById(@PathParam("id") Integer id);
 }

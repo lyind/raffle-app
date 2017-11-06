@@ -36,6 +36,10 @@ public interface RaffleDao
             + "  VALUES (:raffleResult.result)")
     Integer insertRaffleResult(@BindBean("raffleResult") RaffleResult raffleResult);
 
+    @GetGeneratedKeys
+    @SqlUpdate("INSERT INTO quiz_baseline (result)\n"
+            + "  VALUES (:raffleBaseline.result)")
+    Integer insertRaffleBaseline(@BindBean("raffleBaseline") RaffleResult raffleBaseline);
 
     @RegisterConstructorMapper(RaffleResult.class)
     @SqlQuery("SELECT * FROM quiz")
@@ -44,4 +48,13 @@ public interface RaffleDao
     @RegisterConstructorMapper(RaffleResult.class)
     @SqlQuery("SELECT * FROM quiz WHERE id = :id")
     RaffleResult findById(@Bind("id") Integer id);
+
+    @RegisterConstructorMapper(RaffleResult.class)
+    @SqlQuery("SELECT *\n"
+            + "FROM quiz_baseline qb1\n"
+            + "WHERE qb1.id = (\n"
+            + "  SELECT id\n"
+            + "  FROM (SELECT id, MAX(qb2.ts) FROM quiz_baseline qb2)\n"
+            + ")")
+    RaffleResult findCurrentRaffleBaseline();
 }

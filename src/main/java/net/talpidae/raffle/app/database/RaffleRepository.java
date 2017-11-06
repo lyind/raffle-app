@@ -36,6 +36,12 @@ public interface RaffleRepository
     }
 
 
+    default Integer insertRaffleBaseline(RaffleResult raffleResult)
+    {
+        return raffleDao().insertRaffleBaseline(raffleResult);
+    }
+
+
     default List<RaffleResult> findAll()
     {
         return raffleDao().findAll();
@@ -45,5 +51,11 @@ public interface RaffleRepository
     default RaffleResult findById(Integer id)
     {
         return raffleDao().findById(id);
+    }
+
+
+    default RaffleResult findCurrentRaffleBaseline()
+    {
+        return raffleDao().findCurrentRaffleBaseline();
     }
 }
