@@ -30,6 +30,7 @@ import net.talpidae.raffle.app.api.RaffleResult;
 import net.talpidae.raffle.app.database.RaffleRepository;
 
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,17 +78,26 @@ public class RaffleImpl implements Raffle
 
 
     @Override
-    public Integer postQuiz(Quiz quiz, Boolean updateBaseline)
+    public FinishedQuiz postQuiz(Quiz quiz, Boolean updateBaseline)
     {
         try
         {
             if (updateBaseline != null && updateBaseline)
             {
-                return raffleRepository.insertRaffleBaseline(RaffleResult.builder().result(quizWriter.writeValueAsString(quiz)).build());
+                val id = raffleRepository.insertRaffleBaseline(RaffleResult.builder().result(quizWriter.writeValueAsString(quiz)).build());
+
+                // we don't return meaningful stuff on baseline update
+                return FinishedQuiz.builder()
+                        .id(id)
+                        .ts(OffsetDateTime.now())
+                        .stats(QuizStats.emptyStats())
+                        .quiz(quiz)
+                        .build();
             }
             else
             {
-                return raffleRepository.insertRaffleResult(RaffleResult.builder().result(quizWriter.writeValueAsString(quiz)).build());
+                val id = raffleRepository.insertRaffleResult(RaffleResult.builder().result(quizWriter.writeValueAsString(quiz)).build());
+                return getQuizById(id);
             }
         }
         catch (JsonProcessingException e)
@@ -165,7 +175,7 @@ public class RaffleImpl implements Raffle
         // quiz took shorter than baseline: positive difference, negative difference otherwise (both limited by range)
         val baseLineTimeDifferenceMillies = Math.max(-rangeMillies, Math.min(rangeMillies, baselineDuration - quizDuration));
 
-        val scoreTimeModifier = ((double)baseLineTimeDifferenceMillies / (double)rangeMillies) * quizOptions.getScoreTimeFactor();
+        val scoreTimeModifier = ((double) baseLineTimeDifferenceMillies / (double) rangeMillies) * quizOptions.getScoreTimeFactor();
 
         val rawScoreMax = (int) (baselineCorrectAnswers * quizOptions.getPointsPerAnswer());
         val rawScore = (int) (correctMultipleChoiceCount * quizOptions.getPointsPerAnswer());

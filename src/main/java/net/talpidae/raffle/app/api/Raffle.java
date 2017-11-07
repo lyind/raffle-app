@@ -17,6 +17,8 @@
 
 package net.talpidae.raffle.app.api;
 
+import net.talpidae.base.util.auth.AuthRequired;
+
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -42,13 +44,14 @@ public interface Raffle
     @Path("/quiz/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    Integer postQuiz(Quiz quiz, @QueryParam("updateBaseline") Boolean updateBaseline);
+    FinishedQuiz postQuiz(Quiz quiz, @QueryParam("updateBaseline") Boolean updateBaseline);
 
 
     /**
      * Returns all recorded quiz results.
      */
     @GET
+    @AuthRequired
     @Path("/quiz/")
     @Produces(MediaType.APPLICATION_JSON)
     List<FinishedQuiz> getQuiz();
@@ -60,6 +63,7 @@ public interface Raffle
      * @return The quiz result having the specified ID.
      */
     @GET
+    @AuthRequired
     @Path("/quiz/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     FinishedQuiz getQuizById(@PathParam("id") Integer id);
