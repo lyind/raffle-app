@@ -21,6 +21,7 @@ package net.talpidae.raffle.app;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
+import com.google.inject.multibindings.OptionalBinder;
 
 import net.talpidae.base.Base;
 import net.talpidae.base.database.DefaultDataBaseConfig;
@@ -55,7 +56,8 @@ public class RaffleAppApplicationModule extends AbstractModule
 
         bind(Authenticator.class).to(LocalAuthenticator.class);
         bind(SessionService.class).to(LocalSessionService.class);
-        bind(CredentialValidator.class).to(StaticAdminValidator.class);
+
+        OptionalBinder.newOptionalBinder(binder(), CredentialValidator.class).setBinding().to(StaticAdminValidator.class);
 
         bind(DefaultDataBaseConfig.class).to(RaffleAppDefaultDataBaseConfig.class);
     }

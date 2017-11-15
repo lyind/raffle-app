@@ -42,11 +42,24 @@ public class StaticAdminValidator implements CredentialValidator
     @Override
     public UUID validate(Credentials credentials)
     {
-        // TODO this is insecure since the comparison is not constant-time
-        if (Objects.equals(username, credentials.getName())
-                && Objects.equals(password, credentials.getPassword()))
+        if (Objects.equals(username, credentials.getName()))
         {
-            return RANDOM_ADMIN_ID;
+            val passwordInput = credentials.getPassword();
+            
+            boolean match = true;
+            int i;
+            for (i = 0; i < passwordInput.length(); ++i)
+            {
+                if (passwordInput.charAt(i) != password.charAt(i))
+                {
+                    match = false;
+                }
+            }
+
+            if (match && passwordInput.length() == password.length())
+            {
+                return RANDOM_ADMIN_ID;
+            }
         }
 
         return null;
