@@ -43,8 +43,6 @@ import static net.talpidae.base.util.log.LoggingConfigurer.CONTEXT_INSECT_NAME_K
 @Slf4j
 public class RaffleAppApplication implements Application
 {
-    private static final String[] resourcePackages = new String[]{Resource.class.getPackage().getName()};
-
     private final ServerConfig serverConfig;
 
     private final Server server;
@@ -71,7 +69,7 @@ public class RaffleAppApplication implements Application
 
         loggingConfigurer.putContext(CONTEXT_INSECT_NAME_KEY, "raffle-app");
 
-        serverConfig.setJerseyResourcePackages(resourcePackages);
+        serverConfig.addJerseyResourcePackage(Resource.class.getPackage().getName());
         try
         {
             server.start();

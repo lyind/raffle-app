@@ -49,6 +49,8 @@ build/**
 /out/
 .idea/compiler.xml
 .idea/misc.xml
+.idea/modules.xml
+.idea/codeStyles/**
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
