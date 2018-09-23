@@ -8,10 +8,12 @@ import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Value;
+import lombok.ToString;
 
 
-@Value
+@Getter
+@ToString
+@EqualsAndHashCode
 public class Quiz
 {
     /**
@@ -42,7 +44,9 @@ public class Quiz
     }
 
 
-    @Value
+    @Getter
+    @ToString
+    @EqualsAndHashCode
     public static class Participant
     {
         private final String name;
@@ -107,7 +111,8 @@ public class Quiz
     }
 
 
-    @Value
+    @Getter
+    @ToString
     @EqualsAndHashCode(callSuper = true)
     public static class SelectableAnswer extends Answer
     {
@@ -125,7 +130,8 @@ public class Quiz
     }
 
 
-    @Value
+    @Getter
+    @ToString
     @EqualsAndHashCode(callSuper = true)
     public static class MultipleChoiceQuestion extends Question
     {

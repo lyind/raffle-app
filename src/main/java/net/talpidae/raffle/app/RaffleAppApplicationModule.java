@@ -29,12 +29,15 @@ import net.talpidae.base.resource.CredentialValidator;
 import net.talpidae.base.util.Application;
 import net.talpidae.base.util.auth.Authenticator;
 import net.talpidae.base.util.session.SessionService;
+import net.talpidae.raffle.app.api.Raffle;
 import net.talpidae.raffle.app.database.RaffleAppDefaultDataBaseConfig;
 import net.talpidae.raffle.app.database.RaffleRepository;
+import net.talpidae.raffle.app.resource.RaffleImpl;
 import net.talpidae.raffle.app.util.auth.LocalAuthenticator;
 import net.talpidae.raffle.app.util.auth.StaticAdminValidator;
 import net.talpidae.raffle.app.util.session.LocalSessionService;
 
+import org.jboss.resteasy.plugins.stats.RegistryStatsResource;
 import org.jdbi.v3.core.Jdbi;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +56,9 @@ public class RaffleAppApplicationModule extends AbstractModule
     protected void configure()
     {
         bind(Application.class).to(RaffleAppApplication.class);
+
+        bind(RegistryStatsResource.class);
+        bind(Raffle.class).to(RaffleImpl.class);
 
         bind(Authenticator.class).to(LocalAuthenticator.class);
         bind(SessionService.class).to(LocalSessionService.class);

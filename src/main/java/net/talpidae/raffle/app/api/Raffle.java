@@ -21,6 +21,7 @@ import net.talpidae.base.util.auth.AuthRequired;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -31,6 +32,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 
+@Resource
 @Path("/")
 public interface Raffle
 {

@@ -19,11 +19,10 @@ package net.talpidae.raffle.app;
 
 import com.google.inject.Singleton;
 
+import net.talpidae.base.resource.RestApplication;
 import net.talpidae.base.server.Server;
 import net.talpidae.base.server.ServerConfig;
-import net.talpidae.base.util.Application;
 import net.talpidae.base.util.log.LoggingConfigurer;
-import net.talpidae.raffle.app.resource.Resource;
 import net.talpidae.raffle.app.util.server.RaffleRootHandlerWrapper;
 
 import java.net.InetSocketAddress;
@@ -41,7 +40,7 @@ import static net.talpidae.base.util.log.LoggingConfigurer.CONTEXT_INSECT_NAME_K
 
 @Singleton
 @Slf4j
-public class RaffleAppApplication implements Application
+public class RaffleAppApplication implements RestApplication
 {
     private final ServerConfig serverConfig;
 
@@ -68,8 +67,6 @@ public class RaffleAppApplication implements Application
         serverConfig.setRootHandlerWrapper(handlerWrapper);
 
         loggingConfigurer.putContext(CONTEXT_INSECT_NAME_KEY, "raffle-app");
-
-        serverConfig.addJerseyResourcePackage(Resource.class.getPackage().getName());
         try
         {
             server.start();
