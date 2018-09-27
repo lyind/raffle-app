@@ -111,7 +111,6 @@ public class RaffleImpl implements Raffle
     public List<FinishedQuiz> getQuiz()
     {
         val baseline = getCurrentBaseline();
-
         return raffleRepository.findAll()
                 .stream()
                 .map(result -> mapResultToFinishedQuiz(result, baseline))
@@ -190,19 +189,6 @@ public class RaffleImpl implements Raffle
                 .build();
     }
 
-
-    @Value
-    @Builder
-    @ToString
-    @EqualsAndHashCode
-    private static class AnswerKey
-    {
-        private final String questionText;
-
-        private final String answerText;
-    }
-
-
     private Map<AnswerKey, Boolean> getMultipleChoiceAnswers(Quiz quiz)
     {
         val answers = new HashMap<AnswerKey, Boolean>();
@@ -220,7 +206,6 @@ public class RaffleImpl implements Raffle
 
         return answers;
     }
-
 
     private Quiz mapResultToQuiz(RaffleResult raffleResult) throws InternalServerErrorException
     {
@@ -240,7 +225,6 @@ public class RaffleImpl implements Raffle
                 .orElse(null);
     }
 
-
     private FinishedQuiz mapResultToFinishedQuiz(RaffleResult raffleResult, Quiz baseline)
     {
         val quiz = mapResultToQuiz(raffleResult);
@@ -251,5 +235,17 @@ public class RaffleImpl implements Raffle
                 .quiz(quiz)
                 .stats(generateQuizStats(quiz, baseline))
                 .build();
+    }
+
+
+    @Value
+    @Builder
+    @ToString
+    @EqualsAndHashCode
+    private static class AnswerKey
+    {
+        private final String questionText;
+
+        private final String answerText;
     }
 }

@@ -53,7 +53,7 @@ public interface Raffle
      * Returns all recorded quiz results.
      */
     @GET
-    @AuthRequired
+    //@AuthRequired
     @Path("/quiz/")
     @Produces(MediaType.APPLICATION_JSON)
     List<FinishedQuiz> getQuiz();

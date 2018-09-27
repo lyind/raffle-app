@@ -19,9 +19,9 @@ package net.talpidae.raffle.app;
 
 import com.google.inject.Singleton;
 
-import net.talpidae.base.resource.RestApplication;
 import net.talpidae.base.server.Server;
 import net.talpidae.base.server.ServerConfig;
+import net.talpidae.base.util.Application;
 import net.talpidae.base.util.log.LoggingConfigurer;
 import net.talpidae.raffle.app.util.server.RaffleRootHandlerWrapper;
 
@@ -40,7 +40,7 @@ import static net.talpidae.base.util.log.LoggingConfigurer.CONTEXT_INSECT_NAME_K
 
 @Singleton
 @Slf4j
-public class RaffleAppApplication implements RestApplication
+public class RaffleAppApplication implements Application
 {
     private final ServerConfig serverConfig;
 
